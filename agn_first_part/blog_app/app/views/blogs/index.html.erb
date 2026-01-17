@@ -1,0 +1,39 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: black"><%= alert %></p>
+
+<% content_for :title, "Blogs" %>
+
+<h1>Blogs</h1>
+
+<div id="blogs">
+  <% @blogs.each do |blog| %>
+    <%= render blog %>
+    <p>
+      <%= link_to "Show this blog", blog %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New blog", new_blog_path %>
+
+<hr style="margin: 30px 0;">
+
+<h2>Unpublished Blogs</h2>
+
+<% if @unpublished_blogs.any? %>
+  <div id="unpublished_blogs">
+    <% @unpublished_blogs.each do |blog| %>
+      <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 5px;">
+        <h3><%= blog.title %></h3>
+        <p><%= truncate(blog.body, length: 150) %></p>
+        <p>
+          <%= link_to "Show", blog %> |
+          <%= link_to "Edit", edit_blog_path(blog) %> |
+          <%= link_to "Publish", publish_blog_path(blog), style: "color: green; font-weight: bold;" %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p style="color: gray;">No unpublished blogs available.</p>
+<% end %>
