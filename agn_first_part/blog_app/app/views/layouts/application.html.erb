@@ -24,6 +24,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar">
+      <div class="container">
+        <a href="/blogs" class="navbar-brand">My Blog</a>
+        <ul class="navbar-nav">
+          <li><%= link_to "Home", blogs_path, class: "nav-link" %></li>
+          <li><%= link_to "New Post", new_blog_path, class: "btn-new" %></li>
+        </ul>
+      </div>
+    </nav>
+    
+    <main class="main-content">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
+    
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">© <%= Time.current.year %> My Blog. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>

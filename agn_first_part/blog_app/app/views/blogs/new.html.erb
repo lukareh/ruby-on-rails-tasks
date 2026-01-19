@@ -1,11 +1,10 @@
 <% content_for :title, "New blog" %>
 
-<h1>New blog</h1>
+<div class="page-header">
+  <h1 class="page-title">Create New Post</h1>
+  <p class="page-subtitle">Share your thoughts and ideas with the world</p>
+</div>
 
-<%= render "form", blog: @blog %>
-
-<br>
-
-<div>
-  <%= link_to "Back to blogs", blogs_path %>
+<div class="form-container">
+  <%= render "form", blog: @blog %>
 </div>

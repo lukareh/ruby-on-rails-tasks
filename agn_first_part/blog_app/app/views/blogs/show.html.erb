@@ -1,10 +1,28 @@
-<p style="color: green"><%= notice %></p>
+<% if notice.present? %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end %>
 
-<%= render @blog %>
-
-<div>
-  <%= link_to "Edit this blog", edit_blog_path(@blog) %> |
-  <%= link_to "Back to blogs", blogs_path %>
-
-  <%= button_to "Destroy this blog", @blog, method: :delete %>
-</div>
+<article class="article-container">
+  <header class="article-header">
+    <h1 class="article-title"><%= @blog.title %></h1>
+    <div class="article-meta">
+      <span><%= @blog.created_at.strftime("%B %d, %Y") %></span>
+      <span><%= @blog.body.split.size / 200 %> min read</span>
+      <% if @blog.published? %>
+        <span>Published</span>
+      <% else %>
+        <span>Draft</span>
+      <% end %>
+    </div>
+  </header>
+  
+  <div class="article-body">
+    <%= simple_format(@blog.body) %>
+  </div>
+  
+  <div class="article-actions">
+    <%= link_to "Back to Blogs", blogs_path, class: "btn btn-secondary" %>
+    <%= link_to "Edit Post", edit_blog_path(@blog), class: "btn btn-primary" %>
+    <%= button_to "Delete Post", @blog, method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure you want to delete this post?" } %>
+  </div>
+</article>

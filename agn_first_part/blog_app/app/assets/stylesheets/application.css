@@ -1,10 +1,618 @@
 /*
  * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
  */
+
+/* ============================================
+   Global Styles & Reset
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+  line-height: 1.5;
+  color: #24292f;
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+}
+
+/* ============================================
+   Navigation Bar
+   ============================================ */
+
+.navbar {
+  background: #24292f;
+  color: #ffffff;
+  padding: 16px 0;
+  border-bottom: 1px solid #d0d7de;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar .container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  color: #ffffff;
+  opacity: 0.85;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  font-size: 14px;
+}
+
+.nav-link:hover {
+  opacity: 0.7;
+}
+
+.btn-new {
+  background: #2da44e;
+  color: #ffffff;
+  padding: 5px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.2s;
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.btn-new:hover {
+  background: #2c974b;
+}
+
+/* ============================================
+   Container & Layout
+   ============================================ */
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.main-content {
+  min-height: calc(100vh - 80px);
+  padding: 32px 0;
+  background-color: #f6f8fa;
+}
+
+/* ============================================
+   Page Headers
+   ============================================ */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: #24292f;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: #57606a;
+  font-weight: 400;
+}
+
+/* ============================================
+   Alert Messages
+   ============================================ */
+
+.alert {
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-weight: 400;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+
+.alert-success {
+  background-color: #dafbe1;
+  color: #1a7f37;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.alert-danger {
+  background-color: #ffebe9;
+  color: #cf222e;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.alert-info {
+  background-color: #ddf4ff;
+  color: #0969da;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+/* ============================================
+   Blog Cards Grid
+   ============================================ */
+
+.blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.blog-card {
+  background: #ffffff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: none;
+  transition: border-color 0.2s ease;
+  border: 1px solid #d0d7de;
+}
+
+.blog-card:hover {
+  border-color: #8c959f;
+}
+
+.blog-card-header {
+  padding: 16px;
+  background: #f6f8fa;
+  color: #24292f;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.blog-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #0969da;
+  line-height: 1.5;
+}
+
+.blog-card-meta {
+  font-size: 12px;
+  color: #57606a;
+}
+
+.blog-card-body {
+  padding: 16px;
+}
+
+.blog-card-excerpt {
+  color: #57606a;
+  line-height: 1.5;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.blog-card-footer {
+  padding: 16px;
+  background-color: #ffffff;
+  border-top: 1px solid #d0d7de;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn {
+  display: inline-block;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: 1px solid;
+  cursor: pointer;
+  text-align: center;
+  line-height: 20px;
+}
+
+.btn-primary {
+  background: #2da44e;
+  color: #ffffff;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-primary:hover {
+  background: #2c974b;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-secondary {
+  background-color: #f6f8fa;
+  color: #24292f;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-success {
+  background-color: #2da44e;
+  color: #ffffff;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-success:hover {
+  background-color: #2c974b;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-danger {
+  background-color: #cf222e;
+  color: #ffffff;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-danger:hover {
+  background-color: #a40e26;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  border: 1px solid rgba(27, 31, 36, 0.15);
+  color: #24292f;
+}
+
+.btn-outline:hover {
+  background-color: #f6f8fa;
+  border-color: rgba(27, 31, 36, 0.15);
+}
+
+.btn-sm {
+  padding: 3px 12px;
+  font-size: 12px;
+}
+
+.btn-lg {
+  padding: 9px 20px;
+  font-size: 16px;
+}
+
+/* ============================================
+   Article/Blog Post View
+   ============================================ */
+
+.article-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: none;
+  overflow: hidden;
+  border: 1px solid #d0d7de;
+}
+
+.article-header {
+  padding: 32px;
+  background: #f6f8fa;
+  color: #24292f;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.article-title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  color: #24292f;
+}
+
+.article-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #57606a;
+}
+
+.article-body {
+  padding: 32px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #24292f;
+}
+
+.article-body p {
+  margin-bottom: 16px;
+}
+
+.article-actions {
+  padding: 16px 32px;
+  background-color: #f6f8fa;
+  border-top: 1px solid #d0d7de;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================
+   Comments Section
+   ============================================ */
+
+.comments-section {
+  max-width: 900px;
+  margin: 24px auto;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: none;
+  border: 1px solid #d0d7de;
+}
+
+.comments-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #24292f;
+}
+
+.comment {
+  padding: 16px;
+  border: 1px solid #d0d7de;
+  background-color: #ffffff;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: #24292f;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.comment-body {
+  color: #57606a;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 6px;
+  box-shadow: none;
+  border: 1px solid #d0d7de;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #24292f;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #24292f;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 5px 12px;
+  font-size: 14px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-family: inherit;
+  line-height: 20px;
+  background-color: #ffffff;
+  color: #24292f;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #0969da;
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.3);
+}
+
+textarea.form-control {
+  min-height: 200px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-errors {
+  background-color: #ffebe9;
+  color: #cf222e;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(27, 31, 36, 0.15);
+  font-size: 14px;
+}
+
+.form-errors h2 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-errors ul {
+  margin-left: 20px;
+}
+
+.form-errors li {
+  margin-bottom: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+  justify-content: center;
+}
+
+/* ============================================
+   Section Divider
+   ============================================ */
+
+.section-divider {
+  margin: 32px 0;
+  border: none;
+  border-top: 1px solid #d0d7de;
+}
+
+.section-header {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #24292f;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #d0d7de;
+}
+
+.section-header::before {
+  content: none;
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.empty-state {
+  text-align: center;
+  padding: 32px;
+  color: #57606a;
+}
+
+.empty-state-text {
+  font-size: 14px;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+  background-color: #f6f8fa;
+  color: #57606a;
+  padding: 24px 0;
+  text-align: center;
+  margin-top: 48px;
+  border-top: 1px solid #d0d7de;
+}
+
+.footer-text {
+  font-size: 12px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .blogs-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .article-container,
+  .form-container,
+  .comments-section {
+    border-radius: 0;
+    margin-left: -32px;
+    margin-right: -32px;
+  }
+  
+  .article-header,
+  .article-body,
+  .article-actions {
+    padding: 16px;
+  }
+  
+  .article-title {
+    font-size: 24px;
+  }
+  
+  .form-container {
+    padding: 16px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+  
+  .navbar .container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-card-footer {
+    flex-direction: column;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}

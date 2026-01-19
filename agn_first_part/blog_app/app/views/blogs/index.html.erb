@@ -1,39 +1,65 @@
-<p style="color: green"><%= notice %></p>
-<p style="color: black"><%= alert %></p>
-
 <% content_for :title, "Blogs" %>
 
-<h1>Blogs</h1>
+<% if notice.present? %>
+  <div class="alert alert-success"><%= notice %></div>
+<% end %>
 
-<div id="blogs">
+<% if alert.present? %>
+  <div class="alert alert-danger"><%= alert %></div>
+<% end %>
+
+<div class="page-header">
+  <h1 class="page-title">Latest Blog Posts</h1>
+  <p class="page-subtitle">Discover stories, thinking, and expertise from writers on any topic.</p>
+</div>
+
+<div id="blogs" class="blogs-grid">
   <% @blogs.each do |blog| %>
-    <%= render blog %>
-    <p>
-      <%= link_to "Show this blog", blog %>
-    </p>
+    <div class="blog-card">
+      <div class="blog-card-header">
+        <h2 class="blog-card-title"><%= blog.title %></h2>
+        <div class="blog-card-meta">
+          <span><%= blog.created_at.strftime("%B %d, %Y") %></span>
+        </div>
+      </div>
+      <div class="blog-card-body">
+        <p class="blog-card-excerpt"><%= truncate(blog.body, length: 200, separator: ' ') %></p>
+      </div>
+      <div class="blog-card-footer">
+        <%= link_to "Read More", blog, class: "btn btn-primary btn-sm" %>
+        <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-secondary btn-sm" %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New blog", new_blog_path %>
+<hr class="section-divider">
 
-<hr style="margin: 30px 0;">
-
-<h2>Unpublished Blogs</h2>
+<h2 class="section-header">Unpublished Drafts</h2>
 
 <% if @unpublished_blogs.any? %>
-  <div id="unpublished_blogs">
+  <div id="unpublished_blogs" class="blogs-grid">
     <% @unpublished_blogs.each do |blog| %>
-      <div style="border: 1px solid #ccc; padding: 15px; margin: 10px 0; border-radius: 5px;">
-        <h3><%= blog.title %></h3>
-        <p><%= truncate(blog.body, length: 150) %></p>
-        <p>
-          <%= link_to "Show", blog %> |
-          <%= link_to "Edit", edit_blog_path(blog) %> |
-          <%= link_to "Publish", publish_blog_path(blog), style: "color: green; font-weight: bold;" %>
-        </p>
+      <div class="blog-card">
+        <div class="blog-card-header" style="background: #fef3c7; border-bottom: 1px solid #fbbf24;">
+          <h3 class="blog-card-title" style="color: #92400e;"><%= blog.title %></h3>
+          <div class="blog-card-meta" style="color: #92400e;">
+            <span>Draft</span>
+          </div>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-card-excerpt"><%= truncate(blog.body, length: 150, separator: ' ') %></p>
+        </div>
+        <div class="blog-card-footer">
+          <%= link_to "View", blog, class: "btn btn-secondary btn-sm" %>
+          <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-secondary btn-sm" %>
+          <%= link_to "Publish", publish_blog_path(blog), class: "btn btn-success btn-sm" %>
+        </div>
       </div>
     <% end %>
   </div>
 <% else %>
-  <p style="color: gray;">No unpublished blogs available.</p>
+  <div class="empty-state">
+    <p class="empty-state-text">No unpublished drafts available.</p>
+  </div>
 <% end %>

@@ -1,8 +1,7 @@
 <%= form_with(model: blog) do |form| %>
   <% if blog.errors.any? %>
-    <div style="color: red">
+    <div class="form-errors">
       <h2><%= pluralize(blog.errors.count, "error") %> prohibited this blog from being saved:</h2>
-
       <ul>
         <% blog.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,17 +10,18 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="form-group">
+    <%= form.label :title, "Post Title", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Enter an engaging title for your post" %>
   </div>
 
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.textarea :body %>
+  <div class="form-group">
+    <%= form.label :body, "Post Content", class: "form-label" %>
+    <%= form.text_area :body, class: "form-control", placeholder: "Write your blog post content here...", rows: 12 %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= link_to "Cancel", blogs_path, class: "btn btn-secondary" %>
+    <%= form.submit blog.persisted? ? "Update Post" : "Create Post", class: "btn btn-primary btn-lg" %>
   </div>
 <% end %>
