@@ -1,0 +1,25 @@
+<div class="comment-card">
+  <div class="comment-header">
+    <div>
+      <strong class="comment-author"><%= comment.author %></strong>
+      <% if comment.user %>
+        <span style="color: #999; font-size: 0.85rem; margin-left: 0.5rem;">
+          (@<%= comment.user.name %>)
+        </span>
+      <% end %>
+      <div style="color: #999; font-size: 0.85rem; margin-top: 0.2rem;">
+        <%= time_ago_in_words(comment.created_at) %> ago
+      </div>
+    </div>
+    <% if user_signed_in? && (current_user.id == comment.user_id || current_user.id == blog.user_id || current_user.admin?) %>
+      <%= button_to "Delete", blog_comment_path(blog, comment), method: :delete, 
+          data: { turbo_confirm: "Are you sure you want to delete this comment?" }, 
+          style: "padding: 0.4rem 1rem; background: none; color: #c62828; border: 1px solid #c62828; cursor: pointer; border-radius: 20px; font-size: 0.85rem; transition: all 0.3s;",
+          onmouseover: "this.style.background='#c62828'; this.style.color='white';",
+          onmouseout: "this.style.background='none'; this.style.color='#c62828';" %>
+    <% end %>
+  </div>
+  <p class="comment-body" style="margin-top: 0.8rem;">
+    <%= simple_format(comment.content) %>
+  </p>
+</div>

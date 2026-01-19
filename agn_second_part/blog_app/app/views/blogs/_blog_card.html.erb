@@ -1,0 +1,38 @@
+<article class="blog-card">
+  <div class="blog-header">
+    <% if blog.user&.avatar&.attached? %>
+      <%= image_tag blog.user.avatar, class: "author-avatar", alt: blog.user.name %>
+    <% else %>
+      <div class="author-avatar-placeholder">
+        <%= blog.user&.name&.first&.upcase || 'A' %>
+      </div>
+    <% end %>
+    
+    <div class="author-info">
+      <span class="author-name"><%= blog.user&.name || 'Anonymous' %></span>
+      <span class="blog-meta">
+        <%= blog.created_at.strftime("%b %d, %Y") %> · 
+        <%= pluralize(blog.comments.count, 'comment') %>
+      </span>
+    </div>
+  </div>
+  
+  <%= link_to blog.title, blog, class: "blog-title" %>
+  
+  <p class="blog-excerpt">
+    <%= truncate(strip_tags(blog.body), length: 200, separator: ' ') %>
+  </p>
+  
+  <div class="blog-footer">
+    <div class="blog-actions">
+      <%= link_to "Read more →", blog, class: "blog-action-link" %>
+      <% if user_signed_in? && (current_user.id == blog.user_id || current_user.admin?) %>
+        <%= link_to "Edit", edit_blog_path(blog), class: "blog-action-link" %>
+      <% end %>
+    </div>
+    
+    <span class="blog-status <%= blog.published? ? 'status-published' : 'status-draft' %>">
+      <%= blog.published? ? '● Published' : '● Draft' %>
+    </span>
+  </div>
+</article>

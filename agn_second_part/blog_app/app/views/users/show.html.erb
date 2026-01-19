@@ -1,0 +1,23 @@
+<h1>User Details</h1>
+
+<div style="margin: 20px 0;">
+  <p><strong>Name:</strong> <%= @user.name %></p>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+  <p><strong>Admin:</strong> <%= @user.admin? ? 'Yes' : 'No' %></p>
+  <p><strong>Created At:</strong> <%= @user.created_at.strftime("%B %d, %Y") %></p>
+</div>
+
+<h2>Blogs by <%= @user.name %></h2>
+<ul>
+  <% @user.blogs.each do |blog| %>
+    <li>
+      <%= link_to blog.title, blog %> 
+      (<%= blog.published? ? 'Published' : 'Unpublished' %>)
+    </li>
+  <% end %>
+</ul>
+
+<div style="margin-top: 20px;">
+  <%= link_to "Edit", edit_user_path(@user) %> |
+  <%= link_to "Back to Users", users_path %>
+</div>

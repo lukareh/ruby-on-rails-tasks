@@ -1,0 +1,14 @@
+-# haml version of comment partial
+.comment{style: "border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;"}
+  .d-flex.justify-content-between.align-items-start{style: "display: flex; justify-content: space-between; align-items: start;"}
+    .flex-1{style: "flex: 1;"}
+      %strong{style: "color: #333;"}= comment.author
+      - if comment.user
+        %span{style: "color: #666; font-size: 0.9rem;"}
+          (by #{comment.user.name})
+      %span{style: "color: #999; font-size: 0.9rem;"}
+        = "- #{comment.created_at.strftime('%B %d, %Y at %I:%M %p')}"
+      %p{style: "margin-top: 0.5rem; color: #555;"}= comment.content
+    %div
+      - if user_signed_in? && (current_user.id == comment.user_id || current_user.id == blog.user_id || current_user.admin?)
+        = button_to "Delete", blog_comment_path(blog, comment), method: :delete, data: { confirm: "Are you sure?" }, style: "padding: 0.25rem 0.5rem; background: #dc3545; color: white; border: none; cursor: pointer; border-radius: 3px;"

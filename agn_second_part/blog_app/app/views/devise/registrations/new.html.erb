@@ -1,0 +1,43 @@
+<div style="max-width: 500px; margin: 5rem auto; padding: 3rem; background: white; border-radius: 12px; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);">
+  <div style="text-align: center; margin-bottom: 2.5rem;">
+    <h2 style="font-size: 2rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">Join BlogSpace</h2>
+    <p style="color: #757575;">Start sharing your stories with the world</p>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="form-group">
+      <%= f.label :name, "Full Name", class: "form-label" %>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-input", placeholder: "Enter your full name" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email, "Email", class: "form-label" %>
+      <%= f.email_field :email, autocomplete: "email", class: "form-input", placeholder: "Enter your email" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "Password", class: "form-label" %>
+      <% if @minimum_password_length %>
+        <span style="color: #757575; font-size: 0.85rem; font-weight: normal;">
+          (<%= @minimum_password_length %> characters minimum)
+        </span>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-input", placeholder: "Create a password" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirm Password", class: "form-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input", placeholder: "Confirm your password" %>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <%= f.submit "Create Account", class: "btn-primary", style: "width: 100%;" %>
+    </div>
+  <% end %>
+
+  <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e8e8e8;">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

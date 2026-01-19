@@ -1,0 +1,28 @@
+<% content_for :title, "My Drafts" %>
+
+<div class="hero-section">
+  <h1 class="hero-title">My Drafts</h1>
+  <p class="hero-subtitle">Your unpublished stories waiting to be shared</p>
+</div>
+
+<div class="blog-filters">
+  <%= link_to "All Posts", root_path, class: "filter-link" %>
+  <%= link_to "My Published", published_blogs_path, class: "filter-link" %>
+  <%= link_to "My Drafts", unpublished_blogs_path, class: "filter-link active" %>
+</div>
+
+<div class="blogs-container">
+  <div id="blogs">
+    <% @blogs.each do |blog| %>
+      <%= render partial: 'blog_card', locals: { blog: blog } %>
+    <% end %>
+    
+    <% if @blogs.empty? %>
+      <div style="text-align: center; padding: 4rem 0; color: #757575;">
+        <h3>No drafts</h3>
+        <p>All your stories are published!</p>
+        <%= link_to "Write a new story", new_blog_path, class: "write-btn", style: "margin-top: 1rem; display: inline-block;" %>
+      </div>
+    <% end %>
+  </div>
+</div>

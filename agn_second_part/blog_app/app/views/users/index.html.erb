@@ -1,0 +1,29 @@
+<h1>Users</h1>
+
+<table style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Admin</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= user.name %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= user.email %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= user.admin? ? 'Yes' : 'No' %></td>
+        <td style="border: 1px solid #ddd; padding: 8px;">
+          <%= link_to "Show", user %> |
+          <%= link_to "Edit", edit_user_path(user) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to "New User", new_user_path %>
+<%= link_to "Back to Blogs", blogs_path %>

@@ -1,0 +1,99 @@
+<% content_for :title, @blog.title %>
+
+<article style="max-width: 740px; margin: 0 auto;">
+  <!-- blog header -->
+  <header style="margin-bottom: 3rem;">
+    <h1 style="font-size: 2.8rem; font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; color: #1a1a1a;">
+      <%= @blog.title %>
+    </h1>
+    
+    <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid #e8e8e8;">
+      <% if @blog.user&.avatar&.attached? %>
+        <%= image_tag @blog.user.avatar, style: "width: 48px; height: 48px; border-radius: 50%; object-fit: cover;", alt: @blog.user.name %>
+      <% else %>
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #ff6b35, #ff8555); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+          <%= @blog.user&.name&.first&.upcase || 'A' %>
+        </div>
+      <% end %>
+      
+      <div>
+        <div style="font-weight: 600; color: #1a1a1a; font-size: 1rem;">
+          <%= @blog.user&.name || 'Anonymous' %>
+        </div>
+        <div style="color: #757575; font-size: 0.9rem;">
+          <%= @blog.created_at.strftime("%B %d, %Y") %> · 
+          <%= pluralize(@blog.comments.count, 'comment') %>
+        </div>
+      </div>
+      
+      <% if user_signed_in? && (current_user.id == @blog.user_id || current_user.admin?) %>
+        <div style="margin-left: auto; display: flex; gap: 1rem;">
+          <%= link_to "Edit", edit_blog_path(@blog), style: "color: #757575; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 20px; font-size: 0.9rem; transition: all 0.3s;" %>
+          <%= button_to "Delete", @blog, method: :delete, form: { style: "display: inline;" }, style: "color: #c62828; background: none; border: 1px solid #c62828; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s;", data: { turbo_confirm: "Are you sure?" } %>
+        </div>
+      <% end %>
+    </div>
+  </header>
+  
+  <!-- blog content -->
+  <div style="font-size: 1.2rem; line-height: 1.8; color: #333; margin-bottom: 3rem;">
+    <%= sanitize(@blog.body, tags: %w(h1 h2 h3 h4 h5 h6 p br strong em u a img ul ol li blockquote div span), attributes: %w(href target rel src alt style class)) %>
+  </div>
+  
+  <% if !@blog.published? %>
+    <div style="background: #fff3e0; border-left: 4px solid #ff6b35; padding: 1rem 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+      <strong style="color: #e65100;">Draft:</strong>
+      <span style="color: #666;">This blog is not published yet.</span>
+      <% if user_signed_in? && current_user.id == @blog.user_id %>
+        <%= link_to "Publish Now", publish_blog_path(@blog), method: :patch, style: "color: #ff6b35; margin-left: 1rem; font-weight: 600;", data: { turbo_method: :patch } %>
+      <% end %>
+    </div>
+  <% end %>
+</article>
+
+<!-- comments section -->
+<div class="comments-section" style="max-width: 740px; margin: 0 auto;">
+  <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 2rem;">Comments (<%= @blog.comments.count %>)</h2>
+  
+  <!-- list of comments -->
+  <div class="comments-list" style="margin-bottom: 3rem;">
+    <%= render partial: 'comments/comment', collection: @blog.comments, locals: { blog: @blog } %>
+  </div>
+
+  <!-- form for adding new comment -->
+  <% if user_signed_in? %>
+    <div class="new-comment-form" style="background: #f9f9f9; padding: 2rem; border-radius: 8px;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, style: "width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #ff6b35;" %>
+        <% else %>
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #ff6b35, #ff8555); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem; border: 2px solid #ff6b35;">
+            <%= current_user.name.first.upcase %>
+          </div>
+        <% end %>
+        <div>
+          <h3 style="font-size: 1.3rem; font-weight: 600; margin: 0;">Add your thoughts</h3>
+          <p style="color: #757575; font-size: 0.9rem; margin: 0;">Posting as <%= current_user.name %></p>
+        </div>
+      </div>
+      
+      <%= form_with(model: [@blog, Comment.new], local: true) do |form| %>
+        <%= form.hidden_field :author, value: current_user.name %>
+
+        <div style="margin-bottom: 1.5rem;">
+          <%= form.label :content, "Comment", style: "display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;" %>
+          <%= form.text_area :content, rows: 4, style: "width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; resize: vertical;", placeholder: "Share your thoughts...", required: true %>
+        </div>
+
+        <div>
+          <%= form.submit "Post Comment", class: "btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div style="text-align: center; padding: 2rem; background: #f9f9f9; border-radius: 8px;">
+      <p style="color: #757575; margin-bottom: 1rem;">Sign in to leave a comment</p>
+      <%= link_to "Sign In", new_user_session_path, class: "btn-primary" %>
+    </div>
+  <% end %>
+</div>

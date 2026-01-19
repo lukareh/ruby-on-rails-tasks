@@ -1,0 +1,32 @@
+<% content_for :title, "Blogs" %>
+
+<div class="hero-section">
+  <h1 class="hero-title">Discover Stories & Ideas</h1>
+  <p class="hero-subtitle">Read, write, and connect with great minds on any topic</p>
+</div>
+
+<div class="blog-filters">
+  <%= link_to "All Posts", root_path, class: "filter-link #{'active' unless params[:action] != 'index'}" %>
+  <% if user_signed_in? %>
+    <%= link_to "My Published", published_blogs_path, class: "filter-link" %>
+    <%= link_to "My Drafts", unpublished_blogs_path, class: "filter-link" %>
+  <% end %>
+</div>
+
+<div class="blogs-container">
+  <div id="blogs">
+    <% @blogs.each do |blog| %>
+      <%= render partial: 'blog_card', locals: { blog: blog } %>
+    <% end %>
+    
+    <% if @blogs.empty? %>
+      <div style="text-align: center; padding: 4rem 0; color: #757575;">
+        <h3>No blogs yet</h3>
+        <p>Be the first to share your story!</p>
+        <% if user_signed_in? %>
+          <%= link_to "Write your first blog", new_blog_path, class: "write-btn", style: "margin-top: 1rem; display: inline-block;" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

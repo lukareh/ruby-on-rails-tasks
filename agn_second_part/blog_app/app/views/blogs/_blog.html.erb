@@ -1,0 +1,22 @@
+<div id="<%= dom_id blog %>">
+  <div>
+    <strong>Title:</strong>
+    <%= blog.title %>
+  </div>
+
+  <div>
+    <strong>Body:</strong>
+    <%= blog.body %>
+  </div>
+
+  <div>
+    <strong>Author:</strong>
+    <%= blog.user&.name || 'Unknown' %>
+  </div>
+
+  <div>
+    <strong>Status:</strong>
+    <%= blog.published? ? 'Published' : 'Unpublished' %>
+  </div>
+
+</div>
